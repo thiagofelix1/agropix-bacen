@@ -1,6 +1,6 @@
 package com.agropix.bacen.application.mapper;
 
-public class ChavePixApplicationMapper {
+public class ChavePixMapper {
 
     // ToDo: Criar Chave Pix Mapper
 
