@@ -28,7 +28,7 @@ public class ContaPersistenceModel {
     @Column(name = "digito", nullable = false)
     private String digito;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false)
     @JoinColumn(name = "titular", nullable = false, unique = true) // ! Por enquanto o cliente so pode ter 1 conta
     private PessoaFisicaPersistenceModel titular;
 
