@@ -4,7 +4,6 @@ import com.agropix.bacen.domain.enums.TipoChavePix;
 import com.agropix.bacen.domain.exceptions.ChavePixInvalidaException;
 import com.agropix.bacen.domain.utils.Utils;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
@@ -12,19 +11,18 @@ import java.util.function.Predicate;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class ChavePix {
     private String chave;
     private Banco banco;
     private TipoChavePix tipo;
-    private PessoaFisica titular;
     private Conta conta;
 
-    public ChavePix(String chave, Banco banco, TipoChavePix tipo, PessoaFisica titular, Conta conta) {
+    protected ChavePix() {  }
+
+    public ChavePix(String chave, Banco banco, TipoChavePix tipo, Conta conta) {
         this.chave = chave;
         this.banco = banco;
         this.tipo = tipo;
-        this.titular = titular;
         this.conta = conta;
 
         this.validar();

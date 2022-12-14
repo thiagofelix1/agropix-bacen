@@ -10,5 +10,5 @@ import lombok.*;
 @EqualsAndHashCode
 public class Banco {
     private String nome;
-    private Long codigo;
+    private String codigo;
 }

@@ -1,36 +1,32 @@
 package com.agropix.bacen.application.service;
 
+import com.agropix.bacen.adapter.in.web.dto.request.criacao_chave.CriacaoChavePixRequest;
+import com.agropix.bacen.application.exceptions.ItemNaoEncontradoException;
+import com.agropix.bacen.application.port.out.DataBasePortOut;
 import com.agropix.bacen.domain.entities.ChavePix;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class ChavePixService {
 
-    // ToDo: Create ChavePixService
-    public ChavePix createChavePix(ChavePix chavePix){
-        //return chavePixRepository.save(chavePix);
-        return chavePix;
+    private final DataBasePortOut portaSaida;
+
+    public ChavePixService(DataBasePortOut portaSaida) {
+        this.portaSaida = portaSaida;
     }
 
-    // ToDo: Read ChavePixService
-    public ChavePix getChavePix(String chave){
-        ChavePix chavePix = new ChavePix();
-        //return chavePixRepository.getChavePix(chave);
-        return chavePix;
+    public ChavePix createChavePix(CriacaoChavePixRequest request) {
+        ChavePix chave = CriacaoChavePixRequest.toEntity(request);
+
+        return portaSaida.save(chave);
+    }
+
+    public ChavePix getChavePix(String chave) {
+        return portaSaida.find(chave)
+            .orElseThrow(() -> new ItemNaoEncontradoException(String.format("Sem chave encontrada para o valor %s", chave)));
     }
 
     // ToDo: Update ChavePixService
-    public ChavePix updateChavePix(ChavePix chavePix){
-        //return chavePixRepository.save(chavePix);
-        return chavePix;
-    }
 
     // ToDo: Delete ChavePixService
-    public ChavePix deleteChavePix(String chave){
-        ChavePix chavePix = new ChavePix();
-        //return chavePixRepository.delete(chavePix);
-        return chavePix;
-    }
 }

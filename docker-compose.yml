@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: changeme
       POSTGRES_DB: bacen_db
     volumes:
-      - /db/
+      - data/bacen/
   admin:
     image: adminer
     restart: always

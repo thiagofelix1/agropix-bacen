@@ -8,14 +8,12 @@ import lombok.*;
 @EqualsAndHashCode
 public class PessoaFisica {
 
-    private Long id;
     private String nome;
-    private Long cpf;
+    private String cpf;
     private String email;
-    private Long telefone;
+    private String telefone;
 
-    public PessoaFisica(Long id, String nome, Long cpf, String email, Long telefone){
-        this.id = id;
+    public PessoaFisica(String nome, String cpf, String email, String telefone){
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
