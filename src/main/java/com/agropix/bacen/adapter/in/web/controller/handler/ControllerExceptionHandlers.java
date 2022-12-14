@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 import java.time.ZonedDateTime;
 
@@ -32,7 +33,13 @@ public class ControllerExceptionHandlers {
     }
 
     @ExceptionHandler({ HttpMessageNotReadableException.class })
-    public ResponseEntity<UnprossableEntityResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseEntity<UnprossableEntityResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e, WebRequest request) {
+        long errorCode = ZonedDateTime.now().toEpochSecond();
+
+        logger.error(request.toString());
+        logger.error("Erro inesperado ao processar requisicao. Dados da exception -> type: {} | mensagem: {} | causa: {} | errorCode: {}",
+                e.getClass().getName(), e.getMessage(), e.getCause(), errorCode);
+
         return ResponseEntity.badRequest()
             .body(new UnprossableEntityResponse("Requisicao enviada com parametros invalidos", HttpStatus.BAD_REQUEST.value()));
     }

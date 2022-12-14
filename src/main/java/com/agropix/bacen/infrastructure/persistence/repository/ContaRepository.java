@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ContaRepository extends JpaRepository<ContaPersistenceModel, UUID> {
+    boolean existsByNumeroConta(String numeroConta);
+    ContaPersistenceModel findByNumeroConta(String numeroConta);
 }

@@ -6,7 +6,7 @@ import com.agropix.bacen.domain.entities.ChavePix;
 import com.agropix.bacen.domain.entities.Conta;
 import com.agropix.bacen.domain.entities.PessoaFisica;
 import com.agropix.bacen.domain.enums.TipoChavePix;
-import com.agropix.bacen.infrastructure.persistence.model.ChavePixPersistenceModel;
+import com.agropix.bacen.infrastructure.persistence.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -22,13 +22,47 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
     private final ChavePixRepository chavePixRepository;
     private final ContaRepository contaRepository;
     private final PessoaFisicaRepository pessoaFisicaRepository;
+    private final TipoChavePixRepository tipoChavePixRepository;
+    private final BancoRepository bancoRepository;
 
     @Override
     public ChavePix save(ChavePix chave) {
         ChavePixPersistenceModel chavePixPersistenceModel = ChavePixPersistenceModel.fromEntity(chave);
 
-        pessoaFisicaRepository.save(chavePixPersistenceModel.getConta().getTitular());
-        contaRepository.save(chavePixPersistenceModel.getConta());
+        TipoChavePix tipoChavePix = chave.getTipo();
+        TipoChavePixPersistenceModel tipoChavePixPersistenceModel = tipoChavePixRepository.findByTipo(tipoChavePix.name())
+                .orElseThrow(() -> new RuntimeException("Tipo chave pix não encontrado!"));
+
+        chavePixPersistenceModel.setTipoChave(tipoChavePixPersistenceModel);
+
+        PessoaFisica pessoaFisica = chave.getConta().getTitular();
+        PessoaFisicaPersistenceModel pessoaFisicaPersistenceModel;
+        if(pessoaFisicaRepository.existsByCpf(pessoaFisica.getCpf())) {
+            pessoaFisicaPersistenceModel = pessoaFisicaRepository.findByCpf(pessoaFisica.getCpf());
+        } else {
+            pessoaFisicaPersistenceModel = pessoaFisicaRepository.saveAndFlush(PessoaFisicaPersistenceModel.fromEntity(pessoaFisica));
+        }
+
+        Conta conta = chave.getConta();
+        ContaPersistenceModel contaPersistenceModel;
+        if(contaRepository.existsByNumeroConta(conta.getNumeroConta())) {
+            contaPersistenceModel = contaRepository.findByNumeroConta(conta.getNumeroConta());
+        } else {
+            contaPersistenceModel = ContaPersistenceModel.fromEntity(conta);
+            contaPersistenceModel.setTitular(pessoaFisicaPersistenceModel);
+            contaPersistenceModel = contaRepository.saveAndFlush(contaPersistenceModel);
+        }
+        chavePixPersistenceModel.setConta(contaPersistenceModel);
+
+        Banco banco = chave.getBanco();
+        BancoPersistenceModel bancoPersistenceModel;
+        if(bancoRepository.existsByCodigo(banco.getCodigo())) {
+            bancoPersistenceModel = bancoRepository.getByCodigo(banco.getCodigo());
+        } else {
+            bancoPersistenceModel = bancoRepository.saveAndFlush(BancoPersistenceModel.fromEntity(banco));
+        }
+        chavePixPersistenceModel.setBanco(bancoPersistenceModel);
+
         chavePixRepository.save(chavePixPersistenceModel);
 
         return chave;

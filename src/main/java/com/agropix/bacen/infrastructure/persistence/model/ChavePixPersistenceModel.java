@@ -22,18 +22,18 @@ public class ChavePixPersistenceModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "tipo_chave", nullable = false)
     private TipoChavePixPersistenceModel tipoChave;
 
     @Column(name = "chave", unique = true, nullable = false)
     private String chave;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "banco", nullable = false)
     private BancoPersistenceModel banco;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "conta", nullable = false)
     private ContaPersistenceModel conta;
 
@@ -54,6 +54,7 @@ public class ChavePixPersistenceModel {
         pessoaFisica.setTelefone(entity.getConta().getTitular().getTelefone());
 
         ContaPersistenceModel conta = new ContaPersistenceModel();
+        conta.setDigito(entity.getConta().getDigito());
         conta.setNumeroConta(entity.getConta().getNumeroConta());
         conta.setTitular(pessoaFisica);
 

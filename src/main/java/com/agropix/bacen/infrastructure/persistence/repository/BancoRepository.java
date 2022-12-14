@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface BancoRepository extends JpaRepository<BancoPersistenceModel, UUID> {
+    boolean existsByCodigo(String codigo);
+    BancoPersistenceModel getByCodigo(String codigo);
 }

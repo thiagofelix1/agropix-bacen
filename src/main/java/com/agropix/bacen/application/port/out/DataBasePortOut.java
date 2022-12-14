@@ -6,12 +6,12 @@ import java.util.Optional;
 
 public interface DataBasePortOut {
 
-    // ToDo: Create ChavePixPortOut
+    // ToDo: Create ChavePixDatabaseAdapter
     ChavePix save(ChavePix chave);
-    // ToDo: Read ChavePixPortOut
+    // ToDo: Read ChavePixDatabaseAdapter
     Optional<ChavePix> find(String chave);
-    // ToDo: Update ChavePixPortOut
+    // ToDo: Update ChavePixDatabaseAdapter
 
-    // ToDo: Delete ChavePixPortOut
+    // ToDo: Delete ChavePixDatabaseAdapter
 
 }
