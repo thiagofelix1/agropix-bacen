@@ -1,3 +1,5 @@
+CREATE TABLE IF NOT EXISTS tipo_chave(id uuid PRIMARY KEY, tipo character varying(255) unique);
+
 INSERT INTO tipo_chave (id, tipo) VALUES ('74cd90d5-11c5-483f-a033-4062e2c4e683', 'ALEATORIA');
 INSERT INTO tipo_chave (id, tipo) VALUES ('cf58ff8e-66ae-4541-9f5c-cc5613264a07', 'EMAIL');
 INSERT INTO tipo_chave (id, tipo) VALUES ('1626ad1a-5977-4516-bb04-9fbccf07f1cb', 'CELULAR');
