@@ -4,6 +4,7 @@ import com.agropix.bacen.adapter.in.web.dto.request.criacao_chave.CriacaoChavePi
 import com.agropix.bacen.application.exceptions.ItemNaoEncontradoException;
 import com.agropix.bacen.application.port.out.DataBasePortOut;
 import com.agropix.bacen.domain.entities.ChavePix;
+import com.agropix.bacen.domain.exceptions.ChavePixExistenteException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,9 @@ public class ChavePixService {
     }
 
     public ChavePix createChavePix(CriacaoChavePixRequest request) {
+        if(portaSaida.find(request.getChave()).isPresent()) {
+            throw new ChavePixExistenteException(String.format("A chave %s já existe.", request.getChave()));
+        }
         ChavePix chave = CriacaoChavePixRequest.toEntity(request);
 
         return portaSaida.save(chave);
