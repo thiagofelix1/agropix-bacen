@@ -1,19 +1,29 @@
-version: '3.1'
+version: '3.9'
 services:
   db:
+    container_name: "postgres_bacen"
     image: postgres
     ports:
-      - '5432:5432'
+      - '5433:5432'
     environment:
-      POSTGRES_USER: user1
-      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: bacen
       POSTGRES_DB: bacen_db
     volumes:
-      - data/bacen/
-  admin:
-    image: adminer
-    restart: always
+      - /db/
+    networks:
+      - backend
+
+  web_bacen:
+    container_name: "bacen"
+    build: .
+    ports:
+      - "5001:5000"
     depends_on:
       - db
-    ports:
-      - '8080:8080'
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: agropix
