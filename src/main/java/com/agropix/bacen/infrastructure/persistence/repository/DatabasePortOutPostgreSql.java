@@ -80,7 +80,8 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
 
     @Override
     public void salvarTransacao(TransacaoPix transacao) {
-        transacaoRepository.save(transacao);
+        TransacaoPixPersistenceModel persistenceModel = TransacaoPixPersistenceModel.fromEntity(transacao);
+        transacaoRepository.save(persistenceModel);
     }
 
     private static ChavePix criaPessoaComEntidadePersistencia(ChavePixPersistenceModel chavePersistida) {

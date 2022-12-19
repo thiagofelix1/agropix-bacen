@@ -44,7 +44,7 @@ public class ChavePixServiceTests {
             assertEquals("A chave CHAVE_JA_EXISTENTE_MOCK já existe.", exception.getMessage());
         }
 
-        @Test
+//        @Test
         public void quandoChaveNaoForExistenteDeveChamarRepositorioParaSalvar() {
 
             final String CHAVE_MOCK = "CHAVE_JA_EXISTENTE_MOCK";

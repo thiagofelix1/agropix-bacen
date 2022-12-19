@@ -8,5 +8,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class TransacaoResponse {
-
+    private String chaveOrigem;
+    private String chaveDestino;
+    private String valor;
+    private String banco;
 }

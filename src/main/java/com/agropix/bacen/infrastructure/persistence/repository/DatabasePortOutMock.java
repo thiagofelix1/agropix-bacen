@@ -2,6 +2,7 @@ package com.agropix.bacen.infrastructure.persistence.repository;
 
 import com.agropix.bacen.application.port.out.DataBasePortOut;
 import com.agropix.bacen.domain.entities.ChavePix;
+import com.agropix.bacen.domain.entities.TransacaoPix;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -20,5 +21,15 @@ public class DatabasePortOutMock implements DataBasePortOut {
     @Override
     public Optional<ChavePix> find(String chave) {
         return Optional.ofNullable(chaves.get(chave));
+    }
+
+    @Override
+    public String getUrlNotificacao(String nomeBanco) {
+        return null;
+    }
+
+    @Override
+    public void salvarTransacao(TransacaoPix transacao) {
+
     }
 }

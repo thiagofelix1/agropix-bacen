@@ -4,21 +4,24 @@ import com.agropix.bacen.adapter.in.web.dto.request.transacao.TransacaoRequest;
 import com.agropix.bacen.adapter.in.web.dto.response.TransacaoResponse;
 import com.agropix.bacen.adapter.out.TransacaoPixPortOut;
 import com.agropix.bacen.application.dto.TransacaoPixWebRequest;
+import com.agropix.bacen.application.exceptions.FalhaTransacaoException;
 import com.agropix.bacen.application.exceptions.ItemNaoEncontradoException;
 import com.agropix.bacen.application.exceptions.PedidoTransacaoInvalidoException;
 import com.agropix.bacen.application.port.out.DataBasePortOut;
-import com.agropix.bacen.domain.entities.Banco;
 import com.agropix.bacen.domain.entities.ChavePix;
 import com.agropix.bacen.domain.entities.TransacaoPix;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
 public class TransacaoService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TransacaoService.class);
 
     private final DataBasePortOut repository;
     private final TransacaoPixPortOut transacaoHttpClient;
@@ -43,7 +46,16 @@ public class TransacaoService {
             new TransacaoPixWebRequest(request.getChaveOrigem(), request.getChaveDestino(), chaveOrigem.getBanco().getNome(), transacao.getValor().toString())
         );
 
-        return new TransacaoResponse();
+        if (responseBancoDestino.isLeft()) {
+            logger.info("Transacao entre chave origem {} e chave destino {} não pode ser efetuada", transacao.getChaveOrigem(), transacao.getChaveDestino());
+            throw new FalhaTransacaoException();
+        }
+
+        return new TransacaoResponse(
+            transacao.getChaveOrigem().getChave(),
+            transacao.getChaveDestino().getChave(),
+            transacao.getValor().setScale(2, RoundingMode.CEILING).toPlainString(),
+            chaveDestino.getBanco().getNome());
     }
 
     private void validaRequest(TransacaoRequest request) {
