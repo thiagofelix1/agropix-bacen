@@ -4,6 +4,7 @@ import com.agropix.bacen.adapter.in.web.dto.response.DomainErrorResponse;
 import com.agropix.bacen.adapter.in.web.dto.response.InternalServerErrorResponse;
 import com.agropix.bacen.adapter.in.web.dto.response.UnprossableEntityResponse;
 import com.agropix.bacen.application.exceptions.ItemNaoEncontradoException;
+import com.agropix.bacen.application.exceptions.PedidoTransacaoInvalidoException;
 import com.agropix.bacen.domain.exceptions.DomainExceptionBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,11 @@ public class ControllerExceptionHandlers {
     @ExceptionHandler({ DomainExceptionBase.class })
     public ResponseEntity<DomainErrorResponse> handleDomainException(DomainExceptionBase e) {
         return ResponseEntity.badRequest().body(new DomainErrorResponse(e.getErrors(), HttpStatus.BAD_REQUEST.value()));
+    }
+
+    @ExceptionHandler({ PedidoTransacaoInvalidoException.class })
+    public ResponseEntity<?> handlePedidoTransacaoInvalidoException(PedidoTransacaoInvalidoException e) {
+        return ResponseEntity.badRequest().body(new DomainErrorResponse(e.getErros(), HttpStatus.BAD_REQUEST.value()));
     }
 
     @ExceptionHandler({ HttpMessageNotReadableException.class })

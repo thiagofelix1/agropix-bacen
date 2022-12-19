@@ -5,16 +5,14 @@ import com.agropix.bacen.application.exceptions.ItemNaoEncontradoException;
 import com.agropix.bacen.application.port.out.DataBasePortOut;
 import com.agropix.bacen.domain.entities.ChavePix;
 import com.agropix.bacen.domain.exceptions.ChavePixExistenteException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ChavePixService {
 
     private final DataBasePortOut portaSaida;
-
-    public ChavePixService(DataBasePortOut portaSaida) {
-        this.portaSaida = portaSaida;
-    }
 
     public ChavePix createChavePix(CriacaoChavePixRequest request) {
         if(portaSaida.find(request.getChave()).isPresent()) {

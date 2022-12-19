@@ -33,6 +33,7 @@ public class TransacaoService {
 
     public TransacaoResponse executarTransacao(TransacaoRequest request) {
 
+        logger.info("Iniciando chamada no metodo 'executarTransacao'");
         validaRequest(request);
         ChavePix chaveOrigem = repository.find(request.getChaveOrigem())
             .orElseThrow(() -> new ItemNaoEncontradoException(String.format("Sem chave pix encontrada para a origem %s", request.getChaveOrigem())));
@@ -47,10 +48,11 @@ public class TransacaoService {
         );
 
         if (responseBancoDestino.isLeft()) {
-            logger.info("Transacao entre chave origem {} e chave destino {} não pode ser efetuada", transacao.getChaveOrigem(), transacao.getChaveDestino());
+            logger.warn("Transacao entre chave origem {} e chave destino {} não pode ser efetuada", transacao.getChaveOrigem().getChave(), transacao.getChaveDestino().getChave());
             throw new FalhaTransacaoException();
         }
 
+        logger.info("Retornando do metodo 'executarTransacao' com sucesso");
         return new TransacaoResponse(
             transacao.getChaveOrigem().getChave(),
             transacao.getChaveDestino().getChave(),
