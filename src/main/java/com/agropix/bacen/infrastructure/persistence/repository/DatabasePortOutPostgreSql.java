@@ -22,6 +22,7 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
     private final TipoChavePixRepository tipoChavePixRepository;
     private final BancoRepository bancoRepository;
     private final TransacaoRepository transacaoRepository;
+    private final UrlNotificacaoRepository urlNotificacaoRepository;
 
     @Override
     public ChavePix save(ChavePix chave) {
@@ -91,5 +92,15 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
                             chavePersistida.getConta().getTitular().getCpf(),
                             chavePersistida.getConta().getTitular().getEmail(),
                             chavePersistida.getConta().getTitular().getTelefone())));
+    }
+
+    public String getUrlNotificacao(String nomeBanco) {
+        Optional<UrlNoticacaoPersistenceModel> possivelUrl = urlNotificacaoRepository.findUrlNoticacaoPersistenceModelByNomeBanco(nomeBanco);
+        if (possivelUrl.isPresent()) {
+            return possivelUrl.get().getUrl();
+        } else {
+            // Não deveria aconter
+            throw new RuntimeException("Não deveria aconter");
+        }
     }
 }
