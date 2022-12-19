@@ -1,10 +1,7 @@
 package com.agropix.bacen.infrastructure.persistence.repository;
 
 import com.agropix.bacen.application.port.out.DataBasePortOut;
-import com.agropix.bacen.domain.entities.Banco;
-import com.agropix.bacen.domain.entities.ChavePix;
-import com.agropix.bacen.domain.entities.Conta;
-import com.agropix.bacen.domain.entities.PessoaFisica;
+import com.agropix.bacen.domain.entities.*;
 import com.agropix.bacen.domain.enums.TipoChavePix;
 import com.agropix.bacen.infrastructure.persistence.model.*;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +21,7 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
     private final PessoaFisicaRepository pessoaFisicaRepository;
     private final TipoChavePixRepository tipoChavePixRepository;
     private final BancoRepository bancoRepository;
+    private final TransacaoRepository transacaoRepository;
 
     @Override
     public ChavePix save(ChavePix chave) {
@@ -77,6 +75,11 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
         } else {
             return possivelChave.map(DatabasePortOutPostgreSql::criaPessoaComEntidadePersistencia);
         }
+    }
+
+    @Override
+    public void salvarTransacao(TransacaoPix transacao) {
+        transacaoRepository.save(transacao);
     }
 
     private static ChavePix criaPessoaComEntidadePersistencia(ChavePixPersistenceModel chavePersistida) {
