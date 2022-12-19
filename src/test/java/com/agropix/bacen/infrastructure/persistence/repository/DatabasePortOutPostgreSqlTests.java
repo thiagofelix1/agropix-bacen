@@ -5,8 +5,7 @@ import com.agropix.bacen.domain.entities.ChavePix;
 import com.agropix.bacen.domain.entities.Conta;
 import com.agropix.bacen.domain.entities.PessoaFisica;
 import com.agropix.bacen.domain.enums.TipoChavePix;
-import com.agropix.bacen.infrastructure.persistence.model.PessoaFisicaPersistenceModel;
-import com.agropix.bacen.infrastructure.persistence.model.TipoChavePixPersistenceModel;
+import com.agropix.bacen.infrastructure.persistence.model.*;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -124,6 +123,33 @@ class DatabasePortOutPostgreSqlTests {
         }
     }
 
+    @Nested
+    class FindTests {
+        @Test
+        void deveRetornarOptionalVazioSeNaoEncontrarChavePixPorValor() {
+            when(chavePixRepository.findChavePixPersistenceModelByChave(any())).thenReturn(Optional.empty());
+            Optional<?> retornoEsperado = Optional.empty();
+            Optional<?> retornoAtual = assertDoesNotThrow(() -> databasePortOutPostgreSql.find("a"));
+            assertEquals(retornoEsperado, retornoAtual);
+        }
+
+        @Test
+        void deveRetornarChavePixAoEncontrarChavePixPorValor() {
+            ChavePix chavePixEsperada = mockChavePix();
+            ChavePixPersistenceModel chavePixPersistenceModel = ChavePixPersistenceModel.fromEntity(chavePixEsperada);
+
+            when(chavePixRepository.findChavePixPersistenceModelByChave(any())).thenReturn(Optional.of(chavePixPersistenceModel));
+
+            Optional<ChavePix> optionalRetorno = assertDoesNotThrow(() -> databasePortOutPostgreSql.find("a"));
+            ChavePix retornoAtual = optionalRetorno.get();
+
+            assertEquals(chavePixEsperada.getChave(), retornoAtual.getChave());
+            assertEquals(chavePixEsperada.getConta().getNumeroConta(), retornoAtual.getConta().getNumeroConta());
+            assertEquals(chavePixEsperada.getTipo(), retornoAtual.getTipo());
+            assertEquals(chavePixEsperada.getBanco().getCodigo(), retornoAtual.getBanco().getCodigo());
+        }
+    }
+
     private Banco mockBanco() {
         return new Banco("nome", "codigo");
     }
@@ -146,6 +172,14 @@ class DatabasePortOutPostgreSqlTests {
         TipoChavePix tipoChavePix = mockTipoChavePix();
         Conta conta = mockConta();
         return new ChavePix(chave, banco, tipoChavePix, conta);
+    }
+
+    private ChavePixPersistenceModel mockChavePixPersistenceModel() {
+        UUID chave = UUID.randomUUID();
+        BancoPersistenceModel bancoPersistenceModel = BancoPersistenceModel.fromEntity(mockBanco());
+        TipoChavePixPersistenceModel tipoChavePixPersistenceModel = TipoChavePixPersistenceModel.fromEntity(mockTipoChavePix());
+        ContaPersistenceModel contaPersistenceModel = ContaPersistenceModel.fromEntity(mockConta());
+        return new ChavePixPersistenceModel(chave, tipoChavePixPersistenceModel, chave.toString(), bancoPersistenceModel, contaPersistenceModel);
     }
 
 }
