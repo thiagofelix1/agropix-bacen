@@ -11,10 +11,6 @@ public abstract class DomainExceptionBase extends RuntimeException {
         this.errors = List.of(message);
     }
 
-    public DomainExceptionBase(List<String> errors) {
-        this.errors = errors;
-    }
-
     public Collection<String> getErrors() {
         return Collections.unmodifiableList(errors);
     }

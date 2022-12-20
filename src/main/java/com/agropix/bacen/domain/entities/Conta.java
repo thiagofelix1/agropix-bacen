@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Conta {
-
     private String numeroConta;
     private String digito;
     private PessoaFisica titular;

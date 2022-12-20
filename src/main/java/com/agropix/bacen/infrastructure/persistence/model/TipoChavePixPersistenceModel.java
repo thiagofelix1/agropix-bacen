@@ -25,6 +25,8 @@ public class TipoChavePixPersistenceModel {
     @Column(name = "tipo", nullable = false, unique = true)
     private String tipo;
 
+
+    // ToDo: Criar Teste TipoChavePixPersistenceModel
     public static TipoChavePixPersistenceModel fromEntity(TipoChavePix entity) {
         TipoChavePixPersistenceModel tipoChave = new TipoChavePixPersistenceModel();
 

@@ -28,12 +28,13 @@ public class PessoaFisicaPersistenceModel {
     @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "telefone", nullable = false, unique = true)
+    @Column(name = "telefone", nullable = false)
     private String telefone;
 
+    // ToDo: Criar Teste PessoaFisicaPersistenceModel
     public static PessoaFisicaPersistenceModel fromEntity(PessoaFisica entity) {
         PessoaFisicaPersistenceModel pessoaFisica = new PessoaFisicaPersistenceModel();
 

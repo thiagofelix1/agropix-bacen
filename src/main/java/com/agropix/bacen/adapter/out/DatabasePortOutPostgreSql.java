@@ -1,18 +1,17 @@
-package com.agropix.bacen.infrastructure.persistence.repository;
+package com.agropix.bacen.adapter.out;
 
 import com.agropix.bacen.application.port.out.DataBasePortOut;
-import com.agropix.bacen.domain.entities.Banco;
-import com.agropix.bacen.domain.entities.ChavePix;
-import com.agropix.bacen.domain.entities.Conta;
-import com.agropix.bacen.domain.entities.PessoaFisica;
+import com.agropix.bacen.domain.entities.*;
 import com.agropix.bacen.domain.enums.TipoChavePix;
 import com.agropix.bacen.infrastructure.persistence.model.*;
+import com.agropix.bacen.infrastructure.persistence.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+// ToDo: Criar Teste DatabasePortOutPostgreSql
 
 @Repository
 @Primary
@@ -24,6 +23,8 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
     private final PessoaFisicaRepository pessoaFisicaRepository;
     private final TipoChavePixRepository tipoChavePixRepository;
     private final BancoRepository bancoRepository;
+    private final TransacaoRepository transacaoRepository;
+    private final UrlNotificacaoRepository urlNotificacaoRepository;
 
     @Override
     public ChavePix save(ChavePix chave) {
@@ -79,6 +80,12 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
         }
     }
 
+    @Override
+    public void salvarTransacao(TransacaoPix transacao) {
+        TransacaoPixPersistenceModel persistenceModel = TransacaoPixPersistenceModel.fromEntity(transacao);
+        transacaoRepository.save(persistenceModel);
+    }
+
     private static ChavePix criaPessoaComEntidadePersistencia(ChavePixPersistenceModel chavePersistida) {
         return new ChavePix(chavePersistida.getChave(),
                 new Banco(chavePersistida.getBanco().getNome(), chavePersistida.getBanco().getCodigo()),
@@ -88,5 +95,15 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
                             chavePersistida.getConta().getTitular().getCpf(),
                             chavePersistida.getConta().getTitular().getEmail(),
                             chavePersistida.getConta().getTitular().getTelefone())));
+    }
+
+    public String getUrlNotificacao(String nomeBanco) {
+        Optional<UrlNotificacaoPersistenceModel> possivelUrl = urlNotificacaoRepository.findUrlNotificacaoPersistenceModelByNomeBanco(nomeBanco);
+        if (possivelUrl.isPresent()) {
+            return possivelUrl.get().getUrl();
+        } else {
+            // Não deveria aconter
+            throw new RuntimeException("Não deveria aconter");
+        }
     }
 }

@@ -22,16 +22,17 @@ public class ContaPersistenceModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "numero_conta", nullable = false, unique = true)
+    @Column(name = "numero_conta", nullable = false)
     private String numeroConta;
 
     @Column(name = "digito", nullable = false)
     private String digito;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "titular", nullable = false, unique = true) // ! Por enquanto o cliente so pode ter 1 conta
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "titular", nullable = false)
     private PessoaFisicaPersistenceModel titular;
 
+    // ToDo: Criar Teste ContaPersistenceModel
     public static ContaPersistenceModel fromEntity(Conta entity) {
         ContaPersistenceModel conta = new ContaPersistenceModel();
 
