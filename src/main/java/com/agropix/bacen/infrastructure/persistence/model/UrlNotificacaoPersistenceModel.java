@@ -18,7 +18,6 @@ public class UrlNotificacaoPersistenceModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String url;
-    @Column(name = "nome_banco")
-    private String nomeBanco;
+    private String banco;
 
 }

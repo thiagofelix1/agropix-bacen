@@ -98,7 +98,7 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
     }
 
     public String getUrlNotificacao(String nomeBanco) {
-        Optional<UrlNotificacaoPersistenceModel> possivelUrl = urlNotificacaoRepository.findUrlNotificacaoPersistenceModelByNomeBanco(nomeBanco);
+        Optional<UrlNotificacaoPersistenceModel> possivelUrl = urlNotificacaoRepository.findUrlNotificacaoPersistenceModelByBanco(nomeBanco);
         if (possivelUrl.isPresent()) {
             return possivelUrl.get().getUrl();
         } else {

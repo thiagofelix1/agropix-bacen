@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface UrlNotificacaoRepository extends JpaRepository<UrlNotificacaoPersistenceModel, UUID> {
-    Optional<UrlNotificacaoPersistenceModel> findUrlNotificacaoPersistenceModelByNomeBanco(String nomeBanco);
+    Optional<UrlNotificacaoPersistenceModel> findUrlNotificacaoPersistenceModelByBanco(String nomeBanco);
 }
