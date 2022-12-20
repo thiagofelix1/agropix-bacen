@@ -5,11 +5,15 @@ import com.agropix.bacen.domain.entities.ChavePix;
 import com.agropix.bacen.domain.entities.Conta;
 import com.agropix.bacen.domain.entities.PessoaFisica;
 import com.agropix.bacen.domain.enums.TipoChavePix;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CriacaoChavePixRequest {
     private String chave;
     private BancoData banco;

@@ -36,7 +36,7 @@ public class TransacaoBuilder {
                 var request = new TransacaoRequest();
 
                 request.setChaveDestino(this.chaveDestino);
-                request.setChaveDestino(this.chaveOrigem);
+                request.setChaveOrigem(this.chaveOrigem);
                 request.setValor(this.valor);
 
                 return request;
