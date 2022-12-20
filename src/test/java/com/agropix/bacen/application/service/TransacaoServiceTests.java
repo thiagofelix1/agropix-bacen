@@ -39,7 +39,7 @@ public class TransacaoServiceTests {
         TransacaoService sut = new TransacaoService(databaseMock, transacaoPixPortOutMock);
 
         PedidoTransacaoInvalidoException exception = assertThrows(PedidoTransacaoInvalidoException.class, () -> sut.executarTransacao(request));
-        assertEquals("Sem chave salva para o valor da chave de origem", "");
+        assertEquals("Sem chave salva para o valor da chave de origem", exception.getErros().toArray()[0]);
 
     }
 
