@@ -12,12 +12,13 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name="url_noticacao")
-public class UrlNoticacaoPersistenceModel {
+@Entity(name= "url_notificacao")
+public class UrlNotificacaoPersistenceModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String url;
     @Column(name = "nome_banco")
     private String nomeBanco;
+
 }

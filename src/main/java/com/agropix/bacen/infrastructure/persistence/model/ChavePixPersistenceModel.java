@@ -37,6 +37,7 @@ public class ChavePixPersistenceModel {
     @JoinColumn(name = "conta", nullable = false)
     private ContaPersistenceModel conta;
 
+    // ToDo: Criar Teste ChavePixPersistenceModel
     public static ChavePixPersistenceModel fromEntity(ChavePix entity) {
         ChavePixPersistenceModel chave = new ChavePixPersistenceModel();
 

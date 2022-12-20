@@ -6,4 +6,5 @@ public interface Either<TLeft, TRight> {
         TRight unsafeGetRight();
         boolean isLeft();
         boolean isRight();
+
 }

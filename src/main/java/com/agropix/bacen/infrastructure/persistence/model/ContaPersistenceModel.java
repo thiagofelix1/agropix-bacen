@@ -32,6 +32,7 @@ public class ContaPersistenceModel {
     @JoinColumn(name = "titular", nullable = false)
     private PessoaFisicaPersistenceModel titular;
 
+    // ToDo: Criar Teste ContaPersistenceModel
     public static ContaPersistenceModel fromEntity(Conta entity) {
         ContaPersistenceModel conta = new ContaPersistenceModel();
 

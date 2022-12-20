@@ -20,7 +20,9 @@ public class Startup {
             .build();
     }
 
+    @Bean
     public TransacaoService transacaoServiceProvider(TransacaoPixPortOut transacaoHttpClient, DataBasePortOut dataBasePortOut) {
         return new TransacaoService(dataBasePortOut, transacaoHttpClient);
     }
+
 }

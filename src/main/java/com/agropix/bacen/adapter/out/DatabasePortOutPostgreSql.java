@@ -1,15 +1,17 @@
-package com.agropix.bacen.infrastructure.persistence.repository;
+package com.agropix.bacen.adapter.out;
 
 import com.agropix.bacen.application.port.out.DataBasePortOut;
 import com.agropix.bacen.domain.entities.*;
 import com.agropix.bacen.domain.enums.TipoChavePix;
 import com.agropix.bacen.infrastructure.persistence.model.*;
+import com.agropix.bacen.infrastructure.persistence.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+// ToDo: Criar Teste DatabasePortOutPostgreSql
 
 @Repository
 @Primary
@@ -96,7 +98,7 @@ public class DatabasePortOutPostgreSql implements DataBasePortOut {
     }
 
     public String getUrlNotificacao(String nomeBanco) {
-        Optional<UrlNoticacaoPersistenceModel> possivelUrl = urlNotificacaoRepository.findUrlNoticacaoPersistenceModelByNomeBanco(nomeBanco);
+        Optional<UrlNotificacaoPersistenceModel> possivelUrl = urlNotificacaoRepository.findUrlNotificacaoPersistenceModelByNomeBanco(nomeBanco);
         if (possivelUrl.isPresent()) {
             return possivelUrl.get().getUrl();
         } else {

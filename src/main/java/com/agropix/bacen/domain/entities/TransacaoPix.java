@@ -14,4 +14,5 @@ public class TransacaoPix {
     private ChavePix chaveOrigem;
     private ChavePix chaveDestino;
     private BigDecimal valor;
+
 }

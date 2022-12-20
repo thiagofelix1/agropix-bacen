@@ -24,5 +24,6 @@ public class PessoaFisica {
     }
 
     private void validar(){
+
     }
 }

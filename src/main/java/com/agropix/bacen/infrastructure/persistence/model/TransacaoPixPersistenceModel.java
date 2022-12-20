@@ -23,6 +23,7 @@ public class TransacaoPixPersistenceModel {
     private String chaveDestino;
     private BigDecimal valor;
 
+    // ToDo: Criar Teste TransacaoPixPersistenceModel
     public static TransacaoPixPersistenceModel fromEntity(TransacaoPix entity) {
         TransacaoPixPersistenceModel model = new TransacaoPixPersistenceModel();
         

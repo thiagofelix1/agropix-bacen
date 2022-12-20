@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+// ToDo: Criar Teste TransacaoPixWebClient
+
 @Component
 @RequiredArgsConstructor
 public class TransacaoPixWebClient implements TransacaoPixPortOut {
@@ -32,7 +34,7 @@ public class TransacaoPixWebClient implements TransacaoPixPortOut {
             return Right.create(new TransacaoEfetuada() {});
         } else {
             logger.info("Retornando com status de transacao recusada");
-            return Left.create(response::getStatusCodeValue);
+            return Left.create(new FalhaTransacao() {});
         }
     }
 }

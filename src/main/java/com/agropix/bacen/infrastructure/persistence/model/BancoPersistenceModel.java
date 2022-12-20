@@ -27,6 +27,7 @@ public class BancoPersistenceModel {
     @Column(name = "codigo", nullable = false, unique = true)
     private String codigo;
 
+    // ToDo: Criar Teste BancoPersistenceModel
     public static BancoPersistenceModel fromEntity(Banco entity) {
         var banco = new BancoPersistenceModel();
 

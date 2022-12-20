@@ -1,5 +1,6 @@
 package com.agropix.bacen.infrastructure.persistence.repository;
 
+import com.agropix.bacen.adapter.out.DatabasePortOutPostgreSql;
 import com.agropix.bacen.domain.entities.Banco;
 import com.agropix.bacen.domain.entities.ChavePix;
 import com.agropix.bacen.domain.entities.Conta;

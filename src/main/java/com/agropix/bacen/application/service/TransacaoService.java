@@ -18,11 +18,9 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@Service
 public class TransacaoService {
 
     private static final Logger logger = LoggerFactory.getLogger(TransacaoService.class);
-
     private final DataBasePortOut repository;
     private final TransacaoPixPortOut transacaoHttpClient;
 
@@ -31,6 +29,7 @@ public class TransacaoService {
         this.transacaoHttpClient = transacaoHttpClient;
     }
 
+    // ToDo: Criar Teste executarTransacao
     public TransacaoResponse executarTransacao(TransacaoRequest request) {
 
         logger.info("Iniciando chamada no metodo 'executarTransacao'");
@@ -62,6 +61,7 @@ public class TransacaoService {
             chaveDestino.getBanco().getNome());
     }
 
+    // ToDo: Criar Teste executarTransacao
     private void validaRequest(TransacaoRequest request) {
 
         ArrayList<String> erros = new ArrayList<>();

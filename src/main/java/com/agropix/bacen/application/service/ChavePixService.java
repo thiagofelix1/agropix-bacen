@@ -14,6 +14,7 @@ public class ChavePixService {
 
     private final DataBasePortOut portaSaida;
 
+    // ToDo: Criar Teste createChavePix
     public ChavePix createChavePix(CriacaoChavePixRequest request) {
         if(portaSaida.find(request.getChave()).isPresent()) {
             throw new ChavePixExistenteException(String.format("A chave %s já existe.", request.getChave()));
@@ -23,12 +24,10 @@ public class ChavePixService {
         return portaSaida.save(chave);
     }
 
+    // ToDo: Criar Teste getChavePix
     public ChavePix getChavePix(String chave) {
         return portaSaida.find(chave)
             .orElseThrow(() -> new ItemNaoEncontradoException(String.format("Sem chave encontrada para o valor %s", chave)));
     }
 
-    // ToDo: Update ChavePixService
-
-    // ToDo: Delete ChavePixService
 }
