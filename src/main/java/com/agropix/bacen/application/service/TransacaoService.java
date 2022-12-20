@@ -52,6 +52,8 @@ public class TransacaoService {
             throw new FalhaTransacaoException();
         }
 
+        repository.salvarTransacao(transacao);
+
         logger.info("Retornando do metodo 'executarTransacao' com sucesso");
         return new TransacaoResponse(
             transacao.getChaveOrigem().getChave(),
